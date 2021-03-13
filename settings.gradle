@@ -1,3 +1,4 @@
 rootProject.name = 'springbook'
+include 'ch1'
 include 'ch5'
 
