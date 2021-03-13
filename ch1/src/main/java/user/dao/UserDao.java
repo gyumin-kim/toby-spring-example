@@ -14,7 +14,7 @@ public class UserDao {
         Class.forName("com.mysql.jdbc.Driver");
 
         // DB 연결을 위한 Connection을 가져온다.
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
+        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:53306/springbook", "spring", "book");
         // SQL을 담은 Statement(또는 PreparedStatement)를 만든다.
         PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
         ps.setString(1, user.getId());
@@ -31,7 +31,7 @@ public class UserDao {
         Class.forName("com.mysql.jdbc.Driver");
 
         // DB 연결을 위한 Connection을 가져온다.
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "spring", "book");
+        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:53306/springbook", "spring", "book");
         // SQL을 담은 Statement(또는 PreparedStatement)를 만든다.
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
