@@ -82,3 +82,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Docker > DB
+docker/db/
