@@ -3,16 +3,21 @@ package user.dao;
 import user.domain.User;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDao {
 
+    private final SimpleConnectionMaker simpleConnectionMaker;
+
+    public UserDao() {
+        this.simpleConnectionMaker = new SimpleConnectionMaker();
+    }
+
     public void add(final User user) throws ClassNotFoundException, SQLException {
         // DB 연결을 위한 Connection을 가져온다.
-        Connection c = getConnection();
+        Connection c = simpleConnectionMaker.makeNewConnection();
         // SQL을 담은 Statement(또는 PreparedStatement)를 만든다.
         PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
         ps.setString(1, user.getId());
@@ -27,7 +32,7 @@ public class UserDao {
 
     public User get(final String id) throws ClassNotFoundException, SQLException {
         // DB 연결을 위한 Connection을 가져온다.
-        Connection c = getConnection();
+        Connection c = simpleConnectionMaker.makeNewConnection();
         // SQL을 담은 Statement(또는 PreparedStatement)를 만든다.
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
@@ -44,11 +49,6 @@ public class UserDao {
         c.close();
 
         return user;
-    }
-
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost:53306/springbook", "spring", "book");
     }
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
