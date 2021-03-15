@@ -11,8 +11,8 @@ public class UserDao {
 
     private final ConnectionMaker connectionMaker;
 
-    public UserDao() {
-        this.connectionMaker = new DConnectionMaker();
+    public UserDao(final ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
 
     public void add(final User user) throws ClassNotFoundException, SQLException {
@@ -49,24 +49,5 @@ public class UserDao {
         c.close();
 
         return user;
-    }
-
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserDao dao = new UserDao();
-
-        User user = new User();
-        user.setId("gyumin-kim");
-        user.setName("김규민");
-        user.setPassword("1234");
-
-        dao.add(user);
-
-        System.out.println(user.getId() + " 등록 성공");
-
-        User user2 = dao.get(user.getId());
-        System.out.println(user2.getName());
-        System.out.println(user2.getPassword());
-
-        System.out.println(user2.getId() + " 조회 성공");
     }
 }
