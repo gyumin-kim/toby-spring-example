@@ -8,6 +8,8 @@ import user.domain.User;
 
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class UserDaoTest {
 
     @Test
@@ -25,12 +27,8 @@ public class UserDaoTest {
         System.out.println(user.getId() + " 등록 성공");
 
         User user2 = dao.get(user.getId());
-        if (!user.getName().equals(user2.getName())) {
-            System.out.println("테스트 실패 (name)");
-        } else if (!user.getPassword().equals(user2.getPassword())) {
-            System.out.println("테스트 실패 (password)");
-        } else {
-            System.out.println("조회 테스트 성공");
-        }
+
+        assertEquals(user.getName(), user2.getName());
+        assertEquals(user.getPassword(), user2.getPassword());
     }
 }
