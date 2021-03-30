@@ -1,13 +1,17 @@
-package user.dao;
+package dao;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import user.dao.DaoFactory;
+import user.dao.UserDao;
 import user.domain.User;
 
 import java.sql.SQLException;
 
 public class UserDaoTest {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    @Test
+    void addAndGet() throws SQLException, ClassNotFoundException {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
         UserDao dao = context.getBean("userDao", UserDao.class);
 
