@@ -2,6 +2,7 @@ package user.dao;
 
 import user.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,15 +10,15 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    private ConnectionMaker connectionMaker;
+    private DataSource dataSource;
 
-    public void setConnectionMaker(final ConnectionMaker connectionMaker) {
-        this.connectionMaker = connectionMaker;
+    public void setConnectionMaker(final DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    public void add(final User user) throws ClassNotFoundException, SQLException {
+    public void add(final User user) throws SQLException {
         // DB 연결을 위한 Connection을 가져온다.
-        Connection c = connectionMaker.makeNewConnection();
+        Connection c = dataSource.getConnection();
         // SQL을 담은 Statement(또는 PreparedStatement)를 만든다.
         PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
         ps.setString(1, user.getId());
@@ -30,9 +31,9 @@ public class UserDao {
         c.close();
     }
 
-    public User get(final String id) throws ClassNotFoundException, SQLException {
+    public User get(final String id) throws SQLException {
         // DB 연결을 위한 Connection을 가져온다.
-        Connection c = connectionMaker.makeNewConnection();
+        Connection c = dataSource.getConnection();
         // SQL을 담은 Statement(또는 PreparedStatement)를 만든다.
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
