@@ -40,7 +40,10 @@ public class UserDao {
         // (조회) SQL 쿼리의 실행 결과를 ResultSet으로 받아서 User 오브젝트에 옮겨준다.
         ResultSet rs = ps.executeQuery();
         rs.next();
-        User user = new User("gyumin-kim", "김규민", "1234");
+        User user = new User();
+        user.setId(rs.getString("id"));
+        user.setName(rs.getString("name"));
+        user.setPassword(rs.getString("password"));
         // 작업 중에 생성된 리소스는 작업을 마친 후 반드시 닫아준다.
         rs.close();
         ps.close();
