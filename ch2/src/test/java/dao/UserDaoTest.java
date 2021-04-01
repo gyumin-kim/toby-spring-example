@@ -3,12 +3,14 @@ package dao;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 import user.dao.UserDao;
 import user.domain.User;
 
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserDaoTest {
 
@@ -56,5 +58,16 @@ public class UserDaoTest {
 
         dao.add(user3);
         assertThat(dao.getCount()).isEqualTo(3);
+    }
+
+    @Test
+    void getUserFailure() throws SQLException {
+        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
+
+        UserDao dao = context.getBean("userDao", UserDao.class);
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
+
+        assertThrows(EmptyResultDataAccessException.class, () -> dao.get("unknown_id"));
     }
 }
