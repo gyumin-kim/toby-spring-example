@@ -1,5 +1,6 @@
 package dao;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -15,14 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserDaoTest {
 
+    private static ApplicationContext context;
+
     private UserDao dao;
     private User user1;
     private User user2;
     private User user3;
 
+    @BeforeAll
+    static void beforeAll() {
+        context = new GenericXmlApplicationContext("applicationContext.xml");
+    }
+
     @BeforeEach
     void setUp() {
-        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
         this.dao = context.getBean("userDao", UserDao.class);
         this.user1 = new User("gyumin1", "김규민", "springno1");
         this.user2 = new User("gyumin2", "김규민", "springno2");
