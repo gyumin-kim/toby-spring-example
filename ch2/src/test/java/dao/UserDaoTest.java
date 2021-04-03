@@ -1,11 +1,13 @@
 package dao;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import user.dao.UserDao;
 import user.domain.User;
 
@@ -14,19 +16,18 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = "/applicationContext.xml")
+// https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#testcontext-ctx-management
 public class UserDaoTest {
 
-    private static ApplicationContext context;
+    @Autowired
+    private ApplicationContext context;
 
     private UserDao dao;
     private User user1;
     private User user2;
     private User user3;
-
-    @BeforeAll
-    static void beforeAll() {
-        context = new GenericXmlApplicationContext("applicationContext.xml");
-    }
 
     @BeforeEach
     void setUp() {
