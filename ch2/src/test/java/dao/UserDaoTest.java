@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import user.dao.UserDao;
@@ -18,9 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
+@ContextConfiguration(locations = "/test-applicationContext.xml")
 // https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#testcontext-ctx-management
-@DirtiesContext
 public class UserDaoTest {
 
     @Autowired
@@ -35,8 +32,6 @@ public class UserDaoTest {
         this.user1 = new User("gyumin1", "김규민", "springno1");
         this.user2 = new User("gyumin2", "김규민", "springno2");
         this.user3 = new User("gyumin3", "김규민", "springno3");
-        SingleConnectionDataSource dataSource = new SingleConnectionDataSource("jdbc:mysql://localhost:53306/testdb", "spring", "book", true);
-        dao.setConnectionMaker(dataSource);
     }
 
     @Test
