@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.springframework:spring-beans:5.2.13.RELEASE")
+    implementation("org.springframework:spring-context:5.2.13.RELEASE")
+    implementation("org.springframework:spring-core:5.2.13.RELEASE")
+    implementation("org.springframework:spring-jdbc:5.2.13.RELEASE")
+    implementation("org.springframework:spring-test:5.2.13.RELEASE")
+    implementation("mysql:mysql-connector-java:5.1.49")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testImplementation("org.assertj:assertj-core:3.11.1")
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
