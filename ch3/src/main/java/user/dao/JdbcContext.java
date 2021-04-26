@@ -18,8 +18,8 @@ public class JdbcContext {
         PreparedStatement ps = null;
 
         try {
-            c = dataSource.getConnection();
-            ps = stmt.makePreparedStatement(c);
+            c = dataSource.getConnection();     // 참조정보 생성
+            ps = stmt.makePreparedStatement(c); // callback 호출 & 참조정보 전달
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
