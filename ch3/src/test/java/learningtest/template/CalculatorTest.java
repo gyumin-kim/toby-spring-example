@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CalcSumTest {
+class CalculatorTest {
 
     private Calculator calculator;
     private String numFilepath;
