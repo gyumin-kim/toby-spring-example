@@ -20,6 +20,21 @@ public class Calculator {
         return fileReadTemplate(filePath, sumCallback);
     }
 
+    public int calcMultiply(final String filepath) throws IOException {
+        BufferedReaderCallback multiplyCallback = new BufferedReaderCallback() {
+            @Override
+            public int doSomethingWithReader(final BufferedReader br) throws IOException {
+                int multiply = 1;
+                String line = null;
+                while ((line = br.readLine()) != null) {
+                    multiply *= Integer.parseInt(line);
+                }
+                return multiply;
+            }
+        };
+        return fileReadTemplate(filepath, multiplyCallback);
+    }
+
     public int fileReadTemplate(final String filepath, final BufferedReaderCallback callback) throws IOException {
         BufferedReader br = null;
         try {
