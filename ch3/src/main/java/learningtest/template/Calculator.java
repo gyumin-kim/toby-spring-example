@@ -25,6 +25,16 @@ public class Calculator {
         return lineReadTemplate(filepath, multiplyCallback, 1);
     }
 
+    public String concatenate(final String filepath) throws IOException {
+        LineCallback<String> concatenateCallback = new LineCallback<String>() {
+            @Override
+            public String doSomethingWithLine(final String line, final String value) {
+                return value + line;
+            }
+        };
+        return lineReadTemplate(filepath, concatenateCallback, "");
+    }
+
     public <T> T lineReadTemplate(final String filepath, final LineCallback<T> callback, final T initVal) throws IOException {
         BufferedReader br = null;
         try {
