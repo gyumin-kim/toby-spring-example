@@ -5,41 +5,36 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Calculator {
-    public int calcSum(final String filePath) throws IOException {
-        BufferedReaderCallback sumCallback = new BufferedReaderCallback() {
+    public int calcSum(final String filepath) throws IOException {
+        LineCallback sumCallback = new LineCallback() {
             @Override
-            public int doSomethingWithReader(final BufferedReader br) throws IOException {
-                int sum = 0;
-                String line;
-                while ((line = br.readLine()) != null) {
-                    sum += Integer.parseInt(line);
-                }
-                return sum;
+            public int doSomethingWithLine(final String line, final int value) {
+                return value + Integer.parseInt(line);
             }
         };
-        return fileReadTemplate(filePath, sumCallback);
+        return lineReadTemplate(filepath, sumCallback, 0);
     }
 
     public int calcMultiply(final String filepath) throws IOException {
-        BufferedReaderCallback multiplyCallback = new BufferedReaderCallback() {
+        LineCallback multiplyCallback = new LineCallback() {
             @Override
-            public int doSomethingWithReader(final BufferedReader br) throws IOException {
-                int multiply = 1;
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    multiply *= Integer.parseInt(line);
-                }
-                return multiply;
+            public int doSomethingWithLine(final String line, final int value) {
+                return value * Integer.parseInt(line);
             }
         };
-        return fileReadTemplate(filepath, multiplyCallback);
+        return lineReadTemplate(filepath, multiplyCallback, 1);
     }
 
-    public int fileReadTemplate(final String filepath, final BufferedReaderCallback callback) throws IOException {
+    public int lineReadTemplate(final String filepath, final LineCallback callback, final int initVal) throws IOException {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(filepath));
-            return callback.doSomethingWithReader(br);
+            int res = initVal;
+            String line;
+            while ((line = br.readLine()) != null) {
+                res = callback.doSomethingWithLine(line, res);
+            }
+            return res;
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw e;
